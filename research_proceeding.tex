@@ -1,0 +1,49 @@
+﻿\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\title{A Transport Pricing Pipeline with Matching and Robust Regression}
+\author{Open-Source Research Note}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We present an open-source pricing pipeline for transport quotations combining preprocessing, temporal normalization, order-level matching, and supervised regression. The framework targets robust prediction under heterogeneous order profiles.
+\end{abstract}
+
+\section{Problem Statement}
+Given records $\{(x_i,y_i,o_i,t_i)\}_{i=1}^N$ where $x_i$ are covariates, $y_i$ is observed price, $o_i$ is order identifier, and $t_i$ is order date, estimate a predictor $f$ for normalized target $\tilde{y}$ while avoiding leakage across quotations from the same order.
+
+\section{Formalization}
+Temporal normalization maps historical price to reference date via coefficient $c(t_i)$:
+\[
+\tilde{y}_i = y_i\,c(t_i).
+\]
+Order-level grouping defines split constraints:
+\[
+\mathcal{O}_{\mathrm{train}}\cap\mathcal{O}_{\mathrm{test}}=\varnothing.
+\]
+Model fitting solves
+\[
+\hat{f}=\arg\min_{f\in\mathcal{F}}\sum_{i\in\mathrm{train}}\ell\big(\tilde{y}_i,f(x_i)\big)+\Omega(f),
+\]
+with candidate classes $\mathcal{F}$ including tree ensembles and neural regressors. Evaluation is order-aggregated (median over quotations per order).
+
+Matching of sparse/singleton orders can be viewed as constrained assignment in feature space with tolerance map $\tau(\cdot)$:
+\[
+\mathrm{match}(i,j)=\mathbf{1}\{\|x_i-x_j\|_{\tau}\le 1\}.
+\]
+
+\section{Research Contribution}
+The pipeline operationalizes a reproducible workflow from raw business-like data to deployable estimators, emphasizing data hygiene, anti-leakage splitting, and model comparability under realistic constraints.
+
+\begin{thebibliography}{9}
+\bibitem{hastie2009} T. Hastie, R. Tibshirani, J. Friedman, \emph{The Elements of Statistical Learning}, Springer, 2009.
+\bibitem{breiman2001} L. Breiman, ``Random Forests,'' \emph{Machine Learning}, 2001.
+\bibitem{chen2016} T. Chen, C. Guestrin, ``XGBoost: A Scalable Tree Boosting System,'' \emph{KDD}, 2016.
+\bibitem{ke2017} G. Ke et al., ``LightGBM: A Highly Efficient Gradient Boosting Decision Tree,'' \emph{NIPS}, 2017.
+\bibitem{rosenbaum1983} P. Rosenbaum, D. Rubin, ``The central role of the propensity score,'' \emph{Biometrika}, 1983.
+\end{thebibliography}
+
+\end{document}
