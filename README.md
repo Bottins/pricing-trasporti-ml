@@ -208,7 +208,7 @@ All original Excel files and derived outputs have been removed/anonymized from t
 If using this pipeline in academic or commercial work, please cite:
 
 ```bibtex
-@software{bottini2026transport_pricing,
+@software{bottino2026transport_pricing,
   author = {Bottino, Alessandro},
   title = {Transportation Pricing ML Pipeline},
   year = {2026},
