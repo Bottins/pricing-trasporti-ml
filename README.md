@@ -209,7 +209,7 @@ If using this pipeline in academic or commercial work, please cite:
 
 ```bibtex
 @software{bottini2026transport_pricing,
-  author = {Bottini, Alessandro},
+  author = {Bottino, Alessandro},
   title = {Transportation Pricing ML Pipeline},
   year = {2026},
   url = {https://github.com/Bottins/pricing-trasporti-ml}
@@ -222,6 +222,6 @@ Developed as part of applied operations research for transportation logistics op
 
 ---
 
-**Author**: Alessandro Bottini
+**Author**: Alessandro Bottino
 **Last Updated**: March 2026
 **Repository**: [github.com/Bottins/pricing-trasporti-ml](https://github.com/Bottins/pricing-trasporti-ml)
